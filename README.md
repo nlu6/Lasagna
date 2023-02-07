@@ -11,4 +11,4 @@
 *Describe how to access the server*
 
 ### License
-See [here](/blob/main/LICENSE)
+See [here](LICENSE.md)
