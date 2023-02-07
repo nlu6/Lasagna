@@ -11,4 +11,4 @@
 *Describe how to access the server*
 
 ### License
-See [here](/Lasagna/blob/main/LICENSE)
+See [here](/blob/main/LICENSE)
