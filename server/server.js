@@ -1,16 +1,59 @@
 // command to ssh into the server: ssh -i "LinuxKey.pem" ec2-user@ec2-54-184-67-144.us-west-2.compute.amazonaws.com
-// can be accessed at domain marcocastrita.com this is just temporary for testing
+
 const express = require('express');
-const app = express();
+const mysql = require('mysql');
 const path = require('path');
-const port = 3000;
+const bodyParser = require('body-parser');
+const app = express()
+const PORT = 3000;
+
+const link = mysql.createConnection({
+   host: 'localhost',
+    user: 'root',
+    password: 'Group2CS386!',
+    database: 'email',
+ });
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/index.html'));
+  res.sendFile(path.join(__dirname, '/index.html'));
 });
 
-app.use(express.static(path.join(__dirname, 'webpage')));
+app.post('/enterData', (req, res) =>
+{
+  link.connect( function(err)
+  {
+   if (err) console.log(err);
+   console.log("connect");
+   });
 
-app.listen(port, () => {
-  console.log(`server is running`)
+  let command = 'INSERT INTO email (??,??,??) VALUES (?,?,?)';
+  let commandString = mysql.format(command, ["numberOne", "numberTwo", "message",
+  req.body.firstNumber, req.body.returnNumber, req.body.messageString]);
+
+  link.query(commandString, (err, res)=>
+  {
+    if (err) console.log(err);
+    console.log("Data added");
+  });
+
+  link.query("SELECT * FROM email;", (err, rows) =>
+  {
+   if (err) console.log(err);
+   console.log('data: \n', rows);
+   res.send("testing");
+  });
+  link.end();
+});
+
+app.get('/log', (req,res) => {
+res.sendFile(path.join(__dirname, 'nohup.out'));
+});
+
+app.use(express.static(path.join(__dirname,'webpage')));
+
+app.listen(PORT, () => {
+  console.log(`server is running on port ${PORT}`)
 })
