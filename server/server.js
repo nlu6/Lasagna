@@ -1,11 +1,12 @@
 // command to ssh into the server: ssh -i "LinuxKey.pem" ec2-user@ec2-54-184-67-144.us-west-2.compute.amazonaws.com
-
+require('dotenv').config()
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
 const bodyParser = require('body-parser');
 const app = express()
 const PORT = 3000;
+const cors = require('cors')
 
 const link = mysql.createConnection({
    host: 'localhost',
@@ -14,6 +15,7 @@ const link = mysql.createConnection({
     database: 'email',
  });
 
+app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -51,6 +53,31 @@ app.post('/enterData', (req, res) =>
 app.get('/log', (req,res) => {
 res.sendFile(path.join(__dirname, 'nohup.out'));
 });
+
+
+/**
+ * Receives the message to be sent
+ * and the recipients' numbers
+ */
+app.post('/sendMessage', bodyParser.json(), async (req, res) => {
+  const message = req.body.message;
+  const recipients = req.body.numbers;
+
+  const accountSid = process.env.TWILIO_ACCOUNT_SID;
+  const authToken = process.env.TWILIO_AUTH_TOKEN;
+  const phoneNumber = process.env.TWILIO_PHONE_NUMBER;
+  const client = require('twilio')(accountSid, authToken);
+
+  try {
+    const response = await client.messages
+          .create({body: message, from: phoneNumber, to: recipients})
+    const success = await response.sid
+    res.json({success})
+  } catch (error) {
+    console.error(error.message);
+    res.json({success: false})
+  }
+})
 
 app.use(express.static(path.join(__dirname,'webpage')));
 
