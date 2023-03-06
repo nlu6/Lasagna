@@ -1,0 +1,26 @@
+###### Before you start anything, you'll need to open a Twilio account.
+#####  Read more about Twilio on their site, to know how to best 
+####   utilize their API.
+
+1. run 'npm install', to install all the newly added dependacies.
+
+2. To run the client webpage, you would need to install yarn, 
+    just run 'npm install yarn --global'
+
+3. run 'yarn install' to install all dependacies for the webpage.
+
+4. To start the client server, use 'yarn start'. 
+    (Make sure to start your server first as it is set to port 3000,
+    you would get a prompt, just enter 'y')
+
+5. Check out the '.env' file and fill it with your information.
+
+6. Go to the 'client/src/variables.js' and confirm your server path,
+    change it if it varies.
+
+Note: I left a phone number in the '.env' server file,
+    that is the only number you can use in test mode.
+    Although, you don't receive the message, you get a 'sid' back.
+    If you want to receive the message, you'd have to buy a phone number from them.
+
+If you find any issues, go to my GitHub.

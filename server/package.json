@@ -1,5 +1,19 @@
 {
+  "name": "Lasagna",
+  "version": "1.0.0",
+  "main": "server.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "dependencies": {
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "twilio": "^4.8.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  },
+  "scripts": {
+    "start": "nodemon server.js"
   }
 }
