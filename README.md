@@ -1,7 +1,6 @@
 # Lasagna
 
 ### What is Lasagna?
-*Add a brief introduction here*
 
 ### How does it work?
 *What languages are used?*
@@ -9,6 +8,9 @@
 
 ### How to use Lasanga
 *Describe how to access the server*
+
+### Version
+Lasagna 1.0
 
 ### Authors
 [Aadarsha Bastola](https://github.com/aadarshabastola)  
@@ -18,4 +20,4 @@
 [Niklas Kariniemi](https://github.com/niklaskariniemi)  
 
 ### License
-See [here](LICENSE.md)
+Lasanga runs under the [GNU AGPLv3 license](LICENSE.md)
