@@ -6,6 +6,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const app = express()
 const PORT = 3000;
+var id = 0;
 
 const link = mysql.createConnection({
    host: 'localhost',
@@ -13,6 +14,12 @@ const link = mysql.createConnection({
     password: 'Group2CS386!',
     database: 'email',
  });
+
+ link.connect( function(err)
+ {
+  if (err) console.log(err);
+  console.log("connect");
+  });
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,15 +30,14 @@ app.get('/', (req, res) => {
 
 app.post('/enterData', (req, res) =>
 {
-  link.connect( function(err)
-  {
-   if (err) console.log(err);
-   console.log("connect");
-   });
+  id++;
+  let sendNumbers = req.body.firstNumber;
+  let returnNumber = req.body.returnNumber;
+  let message = req.body.messageString;
 
-  let command = 'INSERT INTO email (??,??,??) VALUES (?,?,?)';
-  let commandString = mysql.format(command, ["numberOne", "numberTwo", "message",
-  req.body.firstNumber, req.body.returnNumber, req.body.messageString]);
+  let command = 'INSERT INTO email (??,??,??,??) VALUES (?,?,?,?)';
+  let commandString = mysql.format(command, ["sendNumber", "numberTwo", "message","id",
+  sendNumbers, returnNumber, message,id]);
 
   link.query(commandString, (err, res)=>
   {
@@ -39,21 +45,18 @@ app.post('/enterData', (req, res) =>
     console.log("Data added");
   });
 
-  link.query("SELECT * FROM email;", (err, rows) =>
+  link.query("select * from email;", (err, rows) =>
   {
    if (err) console.log(err);
-   console.log('data: \n', rows);
+   console.log("data: ", rows);
    res.send("testing");
   });
-  link.end();
-});
 
-app.get('/log', (req,res) => {
-res.sendFile(path.join(__dirname, 'nohup.out'));
 });
 
 app.use(express.static(path.join(__dirname,'webpage')));
 
 app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`)
-})
+});
+
