@@ -16,7 +16,7 @@ user writes a message in the app, that message is then sent off to the server.
 The server stores the messages. The script is run and the message is sent through
 the SMTP relay to the recipient.
 
-### How to use Lasanga
+### How to use Lasagna
 After opening the app, a Lasagna user will type the message that they want to send.
 Next, they will enter the phone numbers that they would like to send the message
 to. Finally, the user will hit send, and the messages will be delivered to the
