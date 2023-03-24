@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 
 <html>
+
 <head>
-    <title>
-        Testing
-    </title>
+<title>POST test</title>
 </head>
+
 <body>
-    <p>
-        This is for testing url input
-    </p>
+<form action="/enterData" method="POST">
+<lable for="firstNumber">Number to send to:</label><br>
+<input type="text" id="firstNumber" name="firstNumber" ><br>
+<lable for="messageString">Message to send:</label><br>
+<input type="text" id="messageString" name="messageString"><br>
+<lable for="returnNumber">Return number(not required):</label><br>
+<input type="text" id="returnNumber" name="returnNumber"><br>
+<input type="submit" value="Submit">
+
+</form>
 </body>
+
 </html>
