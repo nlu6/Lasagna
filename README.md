@@ -33,4 +33,4 @@ Lasagna 1.0
 [Niklas Kariniemi](https://github.com/niklaskariniemi)  
 
 ### License
-Lasanga runs under the [GNU AGPLv3 license](LICENSE)
+Lasagna runs under the [GNU AGPLv3 license](LICENSE)
