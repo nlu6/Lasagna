@@ -2,9 +2,9 @@
 
 ### What is Lasagna?
 Lasagna makes messaging and data collection simple and affordable for business 
-minded folks. To use Lasagna, a user must first download the app. Afterwards, 
-any user can send messages from their email address to any number of phone 
-numbers. Since Lasagna is still under development, some features, such as text 
+minded folks. To use Lasagna, a user must first download the app. Once in the app, 
+users can send messages to any number of phone numbers or email addresses.
+Since Lasagna is still under development, some features, such as text 
 replies from recipients have yet to be implemented. To remain easy to use, 
 Lasagna’s UI is simple and straightforward.
 
