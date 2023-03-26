@@ -22,6 +22,32 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/index.html'));
 });
 
+app.get('/removeData', (req, res) =>
+{
+  let command= "delete from email where id =".concat(" ", JSON.stringify(id));
+  if( id > -1 )
+    {
+     link.getConnection( (error, connection ) =>
+     {
+      if(error) throw(error);
+      console.log("connected");
+
+      connection.query(command, (err, res) =>
+      {
+       if( error ) throw(error);
+       console.log("data removed");
+      });
+      id--;
+      res.send("data removed");
+     });
+    }
+  else
+     {
+      console.log("no data in database");
+      res.send("no data");
+     }
+});
+
 app.post('/enterData', (req, res) =>
 {
   id++;
@@ -38,7 +64,7 @@ app.post('/enterData', (req, res) =>
   let commandString = mysql.format(command, ["sendNumber", "numberTwo", "message","id",
   sendNumbers, returnNumber, message,id]);
 
-  connection.query(commandString, (err, res)=>
+  connection.query(commandString, (err, rows)=>
   {
     if (err) console.log(err);
     console.log("Data added");
@@ -50,8 +76,13 @@ app.post('/enterData', (req, res) =>
    console.log("data: ", rows);
    connection.release();
   });
+  let spawn = require("child_process").spawn;
+  let pythonScript = spawn('python', ["STMPRelay.py", sendNumbers, returnNumber, message]);
+  pythonScript.stdout.on('data', function(data) {
+  console.log(data.toString());});
   console.log("Connection released");
   });
+  res.send("data has been added");
 });
 
 app.use(express.static(path.join(__dirname,'webpage')));
@@ -59,3 +90,40 @@ app.use(express.static(path.join(__dirname,'webpage')));
 app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`)
 });
+
+// function numberOfSendNumbers( senderString )
+//    {
+//     let index;
+//     let n = 0;
+
+//     for(index = 0; index < senderString.length; index++)
+//        {
+//         if( senderString.charAt(index) == ',' )
+//            {
+//             n++;
+//            }
+//        }
+    
+//     return n + 1;
+//    }
+
+// function getMessage( objectString )
+// {
+//   var returnString = objectString.replace("[{\"message\":\"","");
+//   returnString = returnString.replace("\"}]", "");
+//   return returnString;
+// }
+
+// function getTargetNumbers( objectString )
+// {
+//   var returnString = objectString.replace("[{\"sendNumber\":\"","");
+//   returnString = returnString.replace("\"}]", "");
+//   return returnString;
+// }
+
+// function getReciverNumbers( objectString )
+// {
+//   var returnString = objectString.replace("[{\"numberTwo\":\"","");
+//   returnString = returnString.replace("\"}]", "");
+//   return returnString;
+// }
