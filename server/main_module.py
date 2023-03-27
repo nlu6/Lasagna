@@ -1,14 +1,15 @@
 import smtplib
+import sys
 from email.mime.text import MIMEText
 from twilio.rest import Client
 
 sending_email = "lasagna.messaging@gmail.com"
-email_password = "U4CbQHz2g7dqmGAN"
+email_password = "Censored"
 receiving_emails = []
 email_message = ''
 carrier_domains = {"Verizon Wireless": '@vtext.com', 'AT&T Wireless': '@txt.att.net', 'T-Mobile USA, Inc': '@tmomail.net'}
-twilio_account_sid = "ACc8687d8bfd3bcfa09cb9bb6f3122e075"
-twilio_auth_token = "05bd133119bde7b7c07830e4fef042df"
+twilio_account_sid = "Censored"
+twilio_auth_token = "Censored"
 
 def setReceiving(number_string):
 	"""
@@ -48,6 +49,7 @@ def _setDomains(number_list):
 def setMessage(message):
 	global email_message
 	email_message = message
+	return email_message
 
 def getMessage():
 	return email_message
@@ -80,3 +82,7 @@ def sendMessages():
 		index += 1
 
 	server.quit()
+	
+setReceiving(sys.argv[1])
+setMessage(sys.argv[2])
+sendMessages()
