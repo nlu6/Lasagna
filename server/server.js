@@ -1,4 +1,4 @@
-// command to ssh into the server: ssh -i "LinuxKey.pem" ec2-user@ec2-54-184-67-144.us-west-2.compute.amazonaws.com
+// command to ssh into the server: ssh -i "LinuxKey.pem" ec2-user@ec2-34-209-59-50.us-west-2.compute.amazonaws.com
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
@@ -77,7 +77,7 @@ app.post('/enterData', (req, res) =>
    connection.release();
   });
   let spawn = require("child_process").spawn;
-  let pythonScript = spawn('python', ["STMPRelay.py", sendNumbers, returnNumber, message]);
+  let pythonScript = spawn('python', ["main_module.py", sendNumbers, returnNumber, message]);
   pythonScript.stdout.on('data', function(data) {
   console.log(data.toString());});
   console.log("Connection released");
@@ -90,40 +90,3 @@ app.use(express.static(path.join(__dirname,'webpage')));
 app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`)
 });
-
-// function numberOfSendNumbers( senderString )
-//    {
-//     let index;
-//     let n = 0;
-
-//     for(index = 0; index < senderString.length; index++)
-//        {
-//         if( senderString.charAt(index) == ',' )
-//            {
-//             n++;
-//            }
-//        }
-    
-//     return n + 1;
-//    }
-
-// function getMessage( objectString )
-// {
-//   var returnString = objectString.replace("[{\"message\":\"","");
-//   returnString = returnString.replace("\"}]", "");
-//   return returnString;
-// }
-
-// function getTargetNumbers( objectString )
-// {
-//   var returnString = objectString.replace("[{\"sendNumber\":\"","");
-//   returnString = returnString.replace("\"}]", "");
-//   return returnString;
-// }
-
-// function getReciverNumbers( objectString )
-// {
-//   var returnString = objectString.replace("[{\"numberTwo\":\"","");
-//   returnString = returnString.replace("\"}]", "");
-//   return returnString;
-// }
