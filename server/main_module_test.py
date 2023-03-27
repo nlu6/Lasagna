@@ -9,7 +9,7 @@ def test_setMessage():
 	assert test.setMessage('Test test 1234') == 'Test test 1234'
 
 def test_getReceiving():
-	assert test.getReceiving() == ''
+	assert test.getReceiving() == 'List is empty'
 
 def test_setReceiving():
 	assert test.setReceiving('6692248986, 8082698655') == ["6692248986@txt.att.net", "8082698655@vtext.com"]
