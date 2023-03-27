@@ -1,4 +1,4 @@
-// command to ssh into the server: ssh -i "LinuxKey.pem" ec2-user@ec2-54-184-67-144.us-west-2.compute.amazonaws.com
+// command to ssh into the server: ssh -i "LinuxKey.pem" ec2-user@ec2-34-209-59-50.us-west-2.compute.amazonaws.com
 const express = require('express');
 const mysql = require('mysql');
 const path = require('path');
