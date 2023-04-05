@@ -310,8 +310,6 @@ class _HomePageState extends State<HomePage> {
       "returnNumber": _textBackNumberFormatter.getUnmaskedText(),
     };
 
-    print(reqBody);
-
     http.Response response = await http.post(
       uri,
       body: reqBody,
