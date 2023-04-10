@@ -273,7 +273,10 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onButtonPress() async {
+    // final uri = Uri.http(serverUrl, "/enterData");
     final uri = Uri.parse(serverUrl);
+
+    print(uri);
 
     List<String>? unformattedPhoneNumberList = _controller.getTags;
     List<String>? formattedList = [];
@@ -323,21 +326,19 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    if (context.mounted) {
-      Navigator.pop(context);
-    }
-
     // Await for the response, then return error or success
     if (response.statusCode == 200) {
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
       successful();
       return;
     } else {
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
       unsuccessful("Error: ${response.statusCode}, contact Support");
     }
-
-    // if (context.mounted) {
-
-    // }
   }
 
   void successful() {
