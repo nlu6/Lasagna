@@ -259,7 +259,7 @@ class _HomePageState extends State<HomePage> {
                       height: 16,
                     ),
                     MainButton(
-                      onTap: () => onButtonPress(),
+                      onTap: () => onSubmitButtonPress(),
                       buttonTitleString: 'SEND',
                     )
                   ],
@@ -272,7 +272,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void onButtonPress() async {
+  void onSubmitButtonPress() async {
     final uri = Uri.parse(serverUrl);
 
     List<String>? unformattedPhoneNumberList = _controller.getTags;
@@ -285,19 +285,19 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (formattedList.isEmpty) {
-      unsuccessful('Please at least one Phone Number to Send to');
+      unsuccessfulRequest('Please at least one Phone Number to Send to');
       return;
     }
 
     if (_textBackNumberFormatter.getUnmaskedText().isNotEmpty) {
       if (_textBackNumberFormatter.getUnmaskedText().length != 10) {
-        unsuccessful('Please Enter a Valid Text Back Number');
+        unsuccessfulRequest('Please Enter a Valid Text Back Number');
         return;
       }
     }
 
     if (_messageBodyController.text.isEmpty) {
-      unsuccessful('Please Enter a Message Body');
+      unsuccessfulRequest('Please Enter a Message Body');
       return;
     }
 
@@ -331,10 +331,10 @@ class _HomePageState extends State<HomePage> {
 
     // Await for the response, then return error or success
     if (response.statusCode == 200) {
-      successful();
+      successfulRequest();
       return;
     } else {
-      unsuccessful("Error: ${response.statusCode}, contact Support");
+      unsuccessfulRequest("Error: ${response.statusCode}, contact Support");
     }
 
     // if (context.mounted) {
@@ -342,7 +342,7 @@ class _HomePageState extends State<HomePage> {
     // }
   }
 
-  void successful() {
+  void successfulRequest() {
     Navigator.push(
       context,
       PageTransition(child: const SuccessPage(), type: PageTransitionType.fade),
@@ -356,7 +356,7 @@ class _HomePageState extends State<HomePage> {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  void unsuccessful(String errorMsg) {
+  void unsuccessfulRequest(String errorMsg) {
     Navigator.push(
       context,
       PageTransition(
