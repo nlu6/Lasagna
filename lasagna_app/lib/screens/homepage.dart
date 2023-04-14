@@ -275,6 +275,8 @@ class _HomePageState extends State<HomePage> {
   void onSubmitButtonPress() async {
     final uri = Uri.parse(serverUrl);
 
+    print(uri);
+
     List<String>? unformattedPhoneNumberList = _controller.getTags;
     List<String>? formattedList = [];
 
@@ -310,8 +312,6 @@ class _HomePageState extends State<HomePage> {
       "returnNumber": _textBackNumberFormatter.getUnmaskedText(),
     };
 
-    print(reqBody);
-
     http.Response response = await http.post(
       uri,
       body: reqBody,
@@ -325,10 +325,6 @@ class _HomePageState extends State<HomePage> {
       );
     }
 
-    if (context.mounted) {
-      Navigator.pop(context);
-    }
-
     // Await for the response, then return error or success
     if (response.statusCode == 200) {
       successfulRequest();
@@ -336,10 +332,6 @@ class _HomePageState extends State<HomePage> {
     } else {
       unsuccessfulRequest("Error: ${response.statusCode}, contact Support");
     }
-
-    // if (context.mounted) {
-
-    // }
   }
 
   void successfulRequest() {
