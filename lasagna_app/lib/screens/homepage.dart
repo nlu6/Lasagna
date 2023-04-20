@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lasagna_app/globalvariables.dart';
 import 'package:lasagna_app/screens/failedpage.dart';
+import 'package:lasagna_app/screens/registrationpage.dart';
 import 'package:lasagna_app/screens/successspage.dart';
 import 'package:lasagna_app/widgets/main_button.dart';
 import 'package:lasagna_app/widgets/progress_dialog.dart';
@@ -259,7 +260,8 @@ class _HomePageState extends State<HomePage> {
                       height: 16,
                     ),
                     MainButton(
-                      onTap: () => onSubmitButtonPress(),
+                      // onTap: () => onSubmitButtonPress(),
+                      onTap: () => gotoPage(),
                       buttonTitleString: 'SEND',
                     )
                   ],
@@ -274,8 +276,6 @@ class _HomePageState extends State<HomePage> {
 
   void onSubmitButtonPress() async {
     final uri = Uri.parse(serverUrl);
-
-    print(uri);
 
     List<String>? unformattedPhoneNumberList = _controller.getTags;
     List<String>? formattedList = [];
@@ -356,6 +356,14 @@ class _HomePageState extends State<HomePage> {
             errorMessage: errorMsg,
           ),
           type: PageTransitionType.fade),
+    );
+  }
+
+  void gotoPage() {
+    Navigator.push(
+      context,
+      PageTransition(
+          child: const RegistrationPage(), type: PageTransitionType.fade),
     );
   }
 }

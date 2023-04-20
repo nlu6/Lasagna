@@ -20,6 +20,10 @@ dependencies:
   http: ^0.13.5
   mask_text_input_formatter: ^2.4.0
   textfield_tags: ^2.0.2
+  firebase_core: ^2.10.0
+  firebase_auth: ^4.4.2
+  firebase_database: ^10.1.1
+
 
 dev_dependencies:
   flutter_test:
@@ -32,6 +36,8 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - images/
   uses-material-design: true
   fonts: 
     - family: Uber
