@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lasagna_app/globalvariables.dart';
 import 'package:lasagna_app/screens/failedpage.dart';
-import 'package:lasagna_app/screens/registrationpage.dart';
+import 'package:lasagna_app/screens/loginpage.dart';
 import 'package:lasagna_app/screens/successspage.dart';
 import 'package:lasagna_app/widgets/main_button.dart';
 import 'package:lasagna_app/widgets/progress_dialog.dart';
@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:textfield_tags/textfield_tags.dart';
 
 class HomePage extends StatefulWidget {
+  static const String id = 'home';
   const HomePage({super.key});
 
   @override
@@ -362,8 +363,7 @@ class _HomePageState extends State<HomePage> {
   void gotoPage() {
     Navigator.push(
       context,
-      PageTransition(
-          child: const RegistrationPage(), type: PageTransitionType.fade),
+      PageTransition(child: const LoginPage(), type: PageTransitionType.fade),
     );
   }
 }
