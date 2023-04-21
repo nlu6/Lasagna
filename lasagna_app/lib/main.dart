@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:lasagna_app/firebase_options.dart';
@@ -34,9 +33,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         // primaryColor: const Color(0xFF4A148C),
       ),
-      initialRoute: FirebaseAuth.instance.currentUser == null
-          ? LoginPage.id
-          : HomePage.id,
+      initialRoute: HomePage.id,
       routes: {
         HomePage.id: (context) => const HomePage(),
         LoginPage.id: (context) => const LoginPage(),

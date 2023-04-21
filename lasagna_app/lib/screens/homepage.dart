@@ -51,15 +51,8 @@ class _HomePageState extends State<HomePage> {
       // filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.eager);
 
-  final _textBackNumberFormatter = MaskTextInputFormatter(
-      mask: '(###) ###-####',
-      filter: {"#": RegExp(r'[0-9]')},
-      type: MaskAutoCompletionType.lazy);
-
   final TextEditingController _messageBodyController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _textBackNumberController =
-      TextEditingController();
 
   final _user = FirebaseAuth.instance.currentUser;
 
@@ -290,53 +283,53 @@ class _HomePageState extends State<HomePage> {
                           // labelText: 'Message',
                         ),
                       ),
-                      const SizedBox(height: 16),
-                      TextFormField(
-                        controller: _textBackNumberController,
-                        keyboardType: TextInputType.phone,
-                        inputFormatters: [_textBackNumberFormatter],
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          icon: defaultTargetPlatform == TargetPlatform.iOS
-                              ? const Icon(CupertinoIcons.phone_arrow_down_left)
-                              : const Icon(Icons.phone_callback_outlined),
-                          // hintText: 'Phone number for reply texts',
-                          hintText: 'Text Back Number (Optional)',
-                        ),
-                      ),
                       _user != null
-                          ? Row(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(0),
-                                  child: SizedBox(
-                                    height: 25,
-                                    width: 25,
-                                    child: Checkbox(
-                                        value: textBackFlag,
-                                        onChanged: ((value) {
+                          ? _user!.emailVerified
+                              ? Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(0),
+                                      child: SizedBox(
+                                        height: 25,
+                                        width: 25,
+                                        child: Checkbox(
+                                            value: textBackFlag,
+                                            onChanged: ((value) {
+                                              setState(() {
+                                                textBackFlag = value!;
+                                              });
+                                            })),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(left: 11),
+                                      child: TextButton(
+                                        style: const ButtonStyle(
+                                            splashFactory:
+                                                NoSplash.splashFactory),
+                                        onPressed: () {
                                           setState(() {
-                                            textBackFlag = value!;
+                                            textBackFlag = !textBackFlag;
                                           });
-                                        })),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 11),
+                                        },
+                                        child: const Text(
+                                            'Use Your Email as Text Back Email'),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Padding(
+                                  padding: const EdgeInsets.only(left: 30),
                                   child: TextButton(
                                     style: const ButtonStyle(
                                         splashFactory: NoSplash.splashFactory),
                                     onPressed: () {
-                                      setState(() {
-                                        textBackFlag = !textBackFlag;
-                                      });
+                                      verifyEmail();
                                     },
                                     child: const Text(
-                                        'Use Your Email as Text Back Email'),
+                                        'Verify to Use Your Email as The Text Back Email'),
                                   ),
-                                ),
-                              ],
-                            )
+                                )
                           : Padding(
                               padding: const EdgeInsets.only(left: 30),
                               child: TextButton(
@@ -355,8 +348,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                       MainButton(
-                        // onTap: () => onSubmitButtonPress(),
-                        onTap: () => gotoPage(),
+                        onTap: () => onSubmitButtonPress(),
+                        // onTap: () => gotoPage(),
                         buttonTitleString: 'SEND',
                       ),
                     ],
@@ -387,13 +380,6 @@ class _HomePageState extends State<HomePage> {
       return;
     }
 
-    if (_textBackNumberFormatter.getUnmaskedText().isNotEmpty) {
-      if (_textBackNumberFormatter.getUnmaskedText().length != 10) {
-        unsuccessfulRequest('Please Enter a Valid Text Back Number');
-        return;
-      }
-    }
-
     if (_messageBodyController.text.isEmpty) {
       unsuccessfulRequest('Please Enter a Message Body');
       return;
@@ -405,8 +391,12 @@ class _HomePageState extends State<HomePage> {
     Map<String, String> reqBody = {
       "firstNumber": commaDelimitedString,
       "messageString": _messageBodyController.text,
-      "returnNumber": _textBackNumberFormatter.getUnmaskedText(),
+      "textBackEmail": 'none'
     };
+
+    if (textBackFlag) {
+      reqBody["textBackEmail"] = (_user?.email)!;
+    }
 
     http.Response response = await http.post(
       uri,
@@ -435,8 +425,6 @@ class _HomePageState extends State<HomePage> {
       context,
       PageTransition(child: const SuccessPage(), type: PageTransitionType.fade),
     );
-    _textBackNumberController.clear();
-    _textBackNumberFormatter.clear();
     _phoneNumberController.clear();
     _phoneNumberFormatter.clear();
     _messageBodyController.clear();
@@ -455,10 +443,20 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  void verifyEmail() {
+    _user!.sendEmailVerification();
+    showErrMessage('Check your Email for Verification Link, and Sign Back In');
+  }
+
   void gotoPage() {
     Navigator.push(
       context,
       PageTransition(child: const LoginPage(), type: PageTransitionType.fade),
     );
+  }
+
+  void showErrMessage(String? errMsg) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(errMsg!)));
   }
 }

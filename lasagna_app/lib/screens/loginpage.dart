@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lasagna_app/screens/forgotpassword.dart';
 import 'package:lasagna_app/screens/registrationpage.dart';
 import 'package:page_transition/page_transition.dart';
 
@@ -98,12 +99,15 @@ class _LoginPageState extends State<LoginPage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
-                            onPressed: () => Navigator.push(
-                              context,
-                              PageTransition(
-                                  child: const HomePage(),
-                                  type: PageTransitionType.fade),
-                            ),
+                            onPressed: () async {
+                              String message = await Navigator.push(
+                                context,
+                                PageTransition(
+                                    child: const ForgotPassword(),
+                                    type: PageTransitionType.fade),
+                              );
+                              showErrMessage(message);
+                            },
                             child: const Text('Forgot Password?'),
                           ),
                           TextButton(

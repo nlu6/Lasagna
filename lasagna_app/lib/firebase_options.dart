@@ -47,14 +47,14 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAiNqBYoEofgkE_632LPfJrIgqJWC-PY1k',
-    appId: '1:129561910299:web:ff3deaa623b36c77332cbe',
-    messagingSenderId: '129561910299',
-    projectId: 'lasagna-c9d25',
-    authDomain: 'lasagna-c9d25.firebaseapp.com',
-    storageBucket: 'lasagna-c9d25.appspot.com',
-    measurementId: 'G-G6R6244R71',
-  );
+      apiKey: 'AIzaSyAiNqBYoEofgkE_632LPfJrIgqJWC-PY1k',
+      appId: '1:129561910299:web:ff3deaa623b36c77332cbe',
+      messagingSenderId: '129561910299',
+      projectId: 'lasagna-c9d25',
+      authDomain: 'lasagna-c9d25.firebaseapp.com',
+      storageBucket: 'lasagna-c9d25.appspot.com',
+      measurementId: 'G-G6R6244R71',
+      databaseURL: 'https://lasagna-c9d25-default-rtdb.firebaseio.com');
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBDQxVxMhkARGci3B4RVXygywDAwoBVERM',
@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '129561910299',
     projectId: 'lasagna-c9d25',
     storageBucket: 'lasagna-c9d25.appspot.com',
-    iosClientId: '129561910299-14t1m8824ofnd7go2ao3g2hr1koet50m.apps.googleusercontent.com',
+    iosClientId:
+        '129561910299-14t1m8824ofnd7go2ao3g2hr1koet50m.apps.googleusercontent.com',
     iosBundleId: 'com.bastola.lasagnaApp',
   );
 }
