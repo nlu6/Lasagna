@@ -60,15 +60,8 @@ class _LoginPageState extends State<LoginPage> {
                       const SizedBox(
                         height: 16,
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 30),
-                      //   child: Image.asset(
-                      //     "images/logo.png",
-                      //     height: 200,
-                      //   ),
-                      // ),
-
                       TextFormField(
+                        onFieldSubmitted: (value) => onSubmit(),
                         controller: emailController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
@@ -82,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
+                        onFieldSubmitted: (value) => onSubmit(),
                         controller: passController,
                         obscureText: true,
                         keyboardType: TextInputType.text,
@@ -94,7 +88,6 @@ class _LoginPageState extends State<LoginPage> {
                           hintText: 'Password',
                         ),
                       ),
-
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -160,9 +153,10 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void loginUser() async {
-    final user = await FirebaseAuth.instance
+    await FirebaseAuth.instance
         .signInWithEmailAndPassword(
             email: emailController.text, password: passController.text)
+        // ignore: body_might_complete_normally_catch_error
         .catchError((err) {
       FirebaseAuthException thisErr = err;
       showErrMessage(thisErr.message);
