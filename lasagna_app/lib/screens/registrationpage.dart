@@ -64,14 +64,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       const SizedBox(
                         height: 16,
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.only(left: 30),
-                      //   child: Image.asset(
-                      //     "images/logo.png",
-                      //     height: 200,
-                      //   ),
-                      // ),
                       TextFormField(
+                        onFieldSubmitted: (value) => onSubmit(),
                         textAlignVertical: TextAlignVertical.top,
                         controller: nameController,
                         keyboardType: TextInputType.multiline,
@@ -88,6 +82,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
+                        onFieldSubmitted: (value) => onSubmit(),
                         controller: emailController,
                         keyboardType: TextInputType.text,
                         decoration: InputDecoration(
@@ -101,6 +96,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       ),
                       const SizedBox(height: 16),
                       TextFormField(
+                        onFieldSubmitted: (value) => onSubmit(),
                         controller: passController,
                         obscureText: true,
                         keyboardType: TextInputType.text,
@@ -117,6 +113,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         height: 16,
                       ),
                       TextFormField(
+                        onFieldSubmitted: (value) => onSubmit(),
                         controller: confirmPassController,
                         keyboardType: TextInputType.text,
                         obscureText: true,
@@ -153,7 +150,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       MainButton(
                         onTap: onSubmit,
                         buttonTitleString: 'REGISTER',
-                      )
+                      ),
                     ],
                   ),
                 ),
@@ -191,6 +188,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     UserCredential user = await _auth
         .createUserWithEmailAndPassword(
             email: emailController.text, password: passController.text)
+        // ignore: body_might_complete_normally_catch_error
         .catchError((err) {
       FirebaseAuthException thisErr = err;
       showErrMessage(thisErr.message);
