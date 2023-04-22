@@ -136,8 +136,15 @@ class _HomePageState extends State<HomePage> {
                   : Padding(
                       padding: const EdgeInsets.only(right: 8.0),
                       child: TextButton(
-                        style: const ButtonStyle(
-                            splashFactory: NoSplash.splashFactory),
+                        style: ButtonStyle(
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              return Colors.transparent;
+                            },
+                          ),
+                          splashFactory: NoSplash.splashFactory,
+                        ),
                         onPressed: () {
                           Navigator.push(
                             context,
@@ -304,7 +311,13 @@ class _HomePageState extends State<HomePage> {
                                     Padding(
                                       padding: const EdgeInsets.only(left: 11),
                                       child: TextButton(
-                                        style: const ButtonStyle(
+                                        style: ButtonStyle(
+                                            overlayColor: MaterialStateProperty
+                                                .resolveWith<Color>(
+                                              (Set<MaterialState> states) {
+                                                return Colors.transparent;
+                                              },
+                                            ),
                                             splashFactory:
                                                 NoSplash.splashFactory),
                                         onPressed: () {
@@ -321,7 +334,13 @@ class _HomePageState extends State<HomePage> {
                               : Padding(
                                   padding: const EdgeInsets.only(left: 30),
                                   child: TextButton(
-                                    style: const ButtonStyle(
+                                    style: ButtonStyle(
+                                        overlayColor: MaterialStateProperty
+                                            .resolveWith<Color>(
+                                          (Set<MaterialState> states) {
+                                            return Colors.transparent;
+                                          },
+                                        ),
                                         splashFactory: NoSplash.splashFactory),
                                     onPressed: () {
                                       verifyEmail();
@@ -333,7 +352,13 @@ class _HomePageState extends State<HomePage> {
                           : Padding(
                               padding: const EdgeInsets.only(left: 30),
                               child: TextButton(
-                                style: const ButtonStyle(
+                                style: ButtonStyle(
+                                    overlayColor: MaterialStateProperty
+                                        .resolveWith<Color>(
+                                      (Set<MaterialState> states) {
+                                        return Colors.transparent;
+                                      },
+                                    ),
                                     splashFactory: NoSplash.splashFactory),
                                 onPressed: () {
                                   Navigator.push(
