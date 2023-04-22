@@ -21,7 +21,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
         body: AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle.light,
           child: SafeArea(
@@ -63,8 +62,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         hintText: 'Email',
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
+                    Center(
+                      child: TextButton(
+                        onPressed: () => Navigator.pop(context),
+                        child: const Text('Go Back?'),
+                      ),
                     ),
                     MainButton(
                       onTap: onSubmit,

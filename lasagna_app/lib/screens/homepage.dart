@@ -157,7 +157,7 @@ class _HomePageState extends State<HomePage> {
                     )
             ],
           ),
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(

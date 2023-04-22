@@ -34,7 +34,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.light,
             child: SafeArea(
@@ -68,7 +68,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         onFieldSubmitted: (value) => onSubmit(),
                         textAlignVertical: TextAlignVertical.top,
                         controller: nameController,
-                        keyboardType: TextInputType.multiline,
+                        keyboardType: TextInputType.name,
+                        textCapitalization: TextCapitalization.words,
                         textAlign: TextAlign.start,
                         decoration: InputDecoration(
                           alignLabelWithHint: true,
@@ -84,7 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       TextFormField(
                         onFieldSubmitted: (value) => onSubmit(),
                         controller: emailController,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           icon: defaultTargetPlatform == TargetPlatform.iOS

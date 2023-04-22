@@ -30,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           body: AnnotatedRegion<SystemUiOverlayStyle>(
             value: SystemUiOverlayStyle.light,
             child: SafeArea(
@@ -63,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         onFieldSubmitted: (value) => onSubmit(),
                         controller: emailController,
-                        keyboardType: TextInputType.text,
+                        keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           border: const OutlineInputBorder(),
                           icon: defaultTargetPlatform == TargetPlatform.iOS
