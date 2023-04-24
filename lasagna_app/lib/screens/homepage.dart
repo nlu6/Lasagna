@@ -64,13 +64,14 @@ class _HomePageState extends State<HomePage> {
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
         child: Scaffold(
           appBar: AppBar(
+            toolbarHeight: 80,
             centerTitle: false,
             backgroundColor: const Color.fromARGB(0, 0, 0, 0),
             elevation: 0,
             automaticallyImplyLeading: false,
             title: Padding(
                 padding: const EdgeInsets.only(
-                    left: 38, top: 16, bottom: 16, right: 16),
+                    left: 38, top: 32, bottom: 16, right: 16),
                 child: AnimatedTextKit(
                   repeatForever: false,
                   isRepeatingAnimation: false,
@@ -78,7 +79,7 @@ class _HomePageState extends State<HomePage> {
                     TyperAnimatedText(
                       'Send',
                       textStyle: const TextStyle(
-                        fontSize: 40,
+                        fontSize: 50,
                         fontFamily: 'Uber',
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF4A148C),
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                     TyperAnimatedText(
                       'Anonymous',
                       textStyle: const TextStyle(
-                        fontSize: 40,
+                        fontSize: 50,
                         fontFamily: 'Uber',
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF4A148C),
@@ -96,7 +97,7 @@ class _HomePageState extends State<HomePage> {
                     TyperAnimatedText(
                       'Texts.',
                       textStyle: const TextStyle(
-                        fontSize: 40,
+                        fontSize: 50,
                         fontFamily: 'Uber',
                         fontWeight: FontWeight.w700,
                         color: Color(0xFF4A148C),
@@ -165,7 +166,6 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const SizedBox(height: 16),
                     TextFieldTags(
                       textfieldTagsController: _controller,
                       textSeparators: const [
