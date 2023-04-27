@@ -1,10 +1,11 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:lasagna_app/globalvariables.dart';
 import 'package:lasagna_app/screens/failedpage.dart';
+import 'package:lasagna_app/screens/loginpage.dart';
 import 'package:lasagna_app/screens/successspage.dart';
 import 'package:lasagna_app/widgets/main_button.dart';
 import 'package:lasagna_app/widgets/progress_dialog.dart';
@@ -14,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'package:textfield_tags/textfield_tags.dart';
 
 class HomePage extends StatefulWidget {
+  static const String id = 'home';
   const HomePage({super.key});
 
   @override
@@ -47,80 +49,123 @@ class _HomePageState extends State<HomePage> {
       // filter: {"#": RegExp(r'[0-9]')},
       type: MaskAutoCompletionType.eager);
 
-  final _textBackNumberFormatter = MaskTextInputFormatter(
-      mask: '(###) ###-####',
-      filter: {"#": RegExp(r'[0-9]')},
-      type: MaskAutoCompletionType.lazy);
-
   final TextEditingController _messageBodyController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
-  final TextEditingController _textBackNumberController =
-      TextEditingController();
+
+  final _user = FirebaseAuth.instance.currentUser;
+
+  bool textBackFlag = false;
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: SafeArea(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: GestureDetector(
+        onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+        child: Scaffold(
+          appBar: AppBar(
+            toolbarHeight: 80,
+            centerTitle: false,
+            backgroundColor: const Color.fromARGB(0, 0, 0, 0),
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            title: Padding(
+                padding: const EdgeInsets.only(
+                    left: 38, top: 32, bottom: 16, right: 16),
+                child: AnimatedTextKit(
+                  repeatForever: false,
+                  isRepeatingAnimation: false,
+                  animatedTexts: [
+                    TyperAnimatedText(
+                      'Send',
+                      textStyle: const TextStyle(
+                        fontSize: 50,
+                        fontFamily: 'Uber',
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF4A148C),
+                      ),
+                    ),
+                    TyperAnimatedText(
+                      'Anonymous',
+                      textStyle: const TextStyle(
+                        fontSize: 50,
+                        fontFamily: 'Uber',
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF4A148C),
+                      ),
+                    ),
+                    TyperAnimatedText(
+                      'Texts.',
+                      textStyle: const TextStyle(
+                        fontSize: 50,
+                        fontFamily: 'Uber',
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF4A148C),
+                      ),
+                    ),
+                    TyperAnimatedText(
+                      'Lasagna',
+                      textStyle: const TextStyle(
+                        fontSize: 50,
+                        fontFamily: 'Uber',
+                        fontWeight: FontWeight.w700,
+                        color: Color(0xFF4A148C),
+                      ),
+                    ),
+                  ],
+                )),
+            actions: [
+              _user != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: TextButton(
+                        style: const ButtonStyle(
+                            splashFactory: NoSplash.splashFactory),
+                        onPressed: () {
+                          FirebaseAuth.instance.signOut();
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                                child: const HomePage(),
+                                type: PageTransitionType.fade),
+                          );
+                        },
+                        child: const Text('Log Out'),
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.only(right: 8.0),
+                      child: TextButton(
+                        style: ButtonStyle(
+                          overlayColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              return Colors.transparent;
+                            },
+                          ),
+                          splashFactory: NoSplash.splashFactory,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                                child: const LoginPage(),
+                                type: PageTransitionType.fade),
+                          );
+                        },
+                        child: const Text('Log In'),
+                      ),
+                    )
+            ],
+          ),
+          resizeToAvoidBottomInset: true,
+          body: SafeArea(
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                        padding: const EdgeInsets.only(left: 38),
-                        child: AnimatedTextKit(
-                          repeatForever: false,
-                          isRepeatingAnimation: false,
-                          animatedTexts: [
-                            TyperAnimatedText(
-                              'Send',
-                              textStyle: const TextStyle(
-                                fontSize: 50,
-                                fontFamily: 'Uber',
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF4A148C),
-                              ),
-                            ),
-                            TyperAnimatedText(
-                              'Anonymous',
-                              textStyle: const TextStyle(
-                                fontSize: 50,
-                                fontFamily: 'Uber',
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF4A148C),
-                              ),
-                            ),
-                            TyperAnimatedText(
-                              'Texts.',
-                              textStyle: const TextStyle(
-                                fontSize: 50,
-                                fontFamily: 'Uber',
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF4A148C),
-                              ),
-                            ),
-                            TyperAnimatedText(
-                              'Lasagna',
-                              textStyle: const TextStyle(
-                                fontSize: 50,
-                                fontFamily: 'Uber',
-                                fontWeight: FontWeight.w700,
-                                color: Color(0xFF4A148C),
-                              ),
-                            ),
-                          ],
-                        )),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    // Chips Trials
-
                     TextFieldTags(
                       textfieldTagsController: _controller,
                       textSeparators: const [
@@ -219,7 +264,6 @@ class _HomePageState extends State<HomePage> {
                         });
                       },
                     ),
-
                     const SizedBox(height: 16),
                     TextFormField(
                       textAlignVertical: TextAlignVertical.top,
@@ -241,27 +285,99 @@ class _HomePageState extends State<HomePage> {
                         // labelText: 'Message',
                       ),
                     ),
-                    const SizedBox(height: 16),
-                    TextFormField(
-                      controller: _textBackNumberController,
-                      keyboardType: TextInputType.phone,
-                      inputFormatters: [_textBackNumberFormatter],
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        icon: defaultTargetPlatform == TargetPlatform.iOS
-                            ? const Icon(CupertinoIcons.phone_arrow_down_left)
-                            : const Icon(Icons.phone_callback_outlined),
-                        // hintText: 'Phone number for reply texts',
-                        hintText: 'Text Back Number (Optional)',
-                      ),
+                    const SizedBox(
+                      height: 16,
                     ),
+                    _user != null
+                        ? _user!.emailVerified
+                            ? Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(0),
+                                    child: SizedBox(
+                                      height: 25,
+                                      width: 25,
+                                      child: Checkbox(
+                                          value: textBackFlag,
+                                          onChanged: ((value) {
+                                            setState(() {
+                                              textBackFlag = value!;
+                                            });
+                                          })),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 11),
+                                    child: TextButton(
+                                      style: ButtonStyle(
+                                          overlayColor: MaterialStateProperty
+                                              .resolveWith<Color>(
+                                            (Set<MaterialState> states) {
+                                              return Colors.transparent;
+                                            },
+                                          ),
+                                          splashFactory:
+                                              NoSplash.splashFactory),
+                                      onPressed: () {
+                                        setState(() {
+                                          textBackFlag = !textBackFlag;
+                                        });
+                                      },
+                                      child: const Text(
+                                          'Use Your Email as Text Back Email'),
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.only(left: 30),
+                                child: TextButton(
+                                  style: ButtonStyle(
+                                      overlayColor: MaterialStateProperty
+                                          .resolveWith<Color>(
+                                        (Set<MaterialState> states) {
+                                          return Colors.transparent;
+                                        },
+                                      ),
+                                      splashFactory: NoSplash.splashFactory),
+                                  onPressed: () {
+                                    verifyEmail();
+                                  },
+                                  child: const Text(
+                                      'Verify to Use Your Email as The Text Back Email'),
+                                ),
+                              )
+                        : Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: TextButton(
+                              style: ButtonStyle(
+                                  overlayColor:
+                                      MaterialStateProperty.resolveWith<Color>(
+                                    (Set<MaterialState> states) {
+                                      return Colors.transparent;
+                                    },
+                                  ),
+                                  splashFactory: NoSplash.splashFactory),
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      child: const LoginPage(),
+                                      type: PageTransitionType.fade),
+                                );
+                              },
+                              child: const Text(
+                                  'Log In to Use Your Email as The Text Back Email'),
+                            ),
+                          ),
                     const SizedBox(
                       height: 16,
                     ),
                     MainButton(
-                      onTap: () => onButtonPress(),
+                      onTap: () => onSubmitButtonPress(),
+                      // onTap: () => gotoPage(),
                       buttonTitleString: 'SEND',
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -272,11 +388,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void onButtonPress() async {
-    // final uri = Uri.http(serverUrl, "/enterData");
+  void onSubmitButtonPress() async {
     final uri = Uri.parse(serverUrl);
-
-    print(uri);
 
     List<String>? unformattedPhoneNumberList = _controller.getTags;
     List<String>? formattedList = [];
@@ -288,19 +401,12 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (formattedList.isEmpty) {
-      unsuccessful('Please at least one Phone Number to Send to');
+      unsuccessfulRequest('Please at least one Phone Number to Send to');
       return;
     }
 
-    if (_textBackNumberFormatter.getUnmaskedText().isNotEmpty) {
-      if (_textBackNumberFormatter.getUnmaskedText().length != 10) {
-        unsuccessful('Please Enter a Valid Text Back Number');
-        return;
-      }
-    }
-
     if (_messageBodyController.text.isEmpty) {
-      unsuccessful('Please Enter a Message Body');
+      unsuccessfulRequest('Please Enter a Message Body');
       return;
     }
 
@@ -310,8 +416,12 @@ class _HomePageState extends State<HomePage> {
     Map<String, String> reqBody = {
       "firstNumber": commaDelimitedString,
       "messageString": _messageBodyController.text,
-      "returnNumber": _textBackNumberFormatter.getUnmaskedText(),
+      "textBackEmail": 'none'
     };
+
+    if (textBackFlag) {
+      reqBody["textBackEmail"] = (_user?.email)!;
+    }
 
     http.Response response = await http.post(
       uri,
@@ -331,23 +441,18 @@ class _HomePageState extends State<HomePage> {
       if (context.mounted) {
         Navigator.pop(context);
       }
-      successful();
+      successfulRequest();
       return;
     } else {
-      if (context.mounted) {
-        Navigator.pop(context);
-      }
-      unsuccessful("Error: ${response.statusCode}, contact Support");
+      unsuccessfulRequest("Error: ${response.statusCode}, contact Support");
     }
   }
 
-  void successful() {
+  void successfulRequest() {
     Navigator.push(
       context,
       PageTransition(child: const SuccessPage(), type: PageTransitionType.fade),
     );
-    _textBackNumberController.clear();
-    _textBackNumberFormatter.clear();
     _phoneNumberController.clear();
     _phoneNumberFormatter.clear();
     _messageBodyController.clear();
@@ -355,7 +460,7 @@ class _HomePageState extends State<HomePage> {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 
-  void unsuccessful(String errorMsg) {
+  void unsuccessfulRequest(String errorMsg) {
     Navigator.push(
       context,
       PageTransition(
@@ -364,5 +469,22 @@ class _HomePageState extends State<HomePage> {
           ),
           type: PageTransitionType.fade),
     );
+  }
+
+  void verifyEmail() {
+    _user!.sendEmailVerification();
+    showErrMessage('Check your Email for Verification Link, and Sign Back In');
+  }
+
+  void gotoPage() {
+    Navigator.push(
+      context,
+      PageTransition(child: const LoginPage(), type: PageTransitionType.fade),
+    );
+  }
+
+  void showErrMessage(String? errMsg) {
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(errMsg!)));
   }
 }

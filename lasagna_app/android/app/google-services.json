@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "129561910299",
+    "project_id": "lasagna-c9d25",
+    "storage_bucket": "lasagna-c9d25.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129561910299:android:536df5ce557a8613332cbe",
+        "android_client_info": {
+          "package_name": "com.example.lasagna_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129561910299-8qa2lrnlcniu0v789ndhtf52ammpftkc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDQxVxMhkARGci3B4RVXygywDAwoBVERM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129561910299-8qa2lrnlcniu0v789ndhtf52ammpftkc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
