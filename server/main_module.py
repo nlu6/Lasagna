@@ -76,7 +76,7 @@ def sendMessages():
 	for x in receiving_emails:
 		msg = MIMEText(email_message)
 		msg['Subject'] = ''
-		msg['From'] = ""
+		msg['From'] = sys.argv[3]
 		msg['To'] = receiving_emails[index]
 		server.sendmail(sending_email, receiving_emails[index], msg.as_string())
 		index += 1
