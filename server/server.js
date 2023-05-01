@@ -41,13 +41,13 @@ app.post('/enterData', (req, res) =>
 {
   id++;
   let sendNumbers = req.body.firstNumber;
-  let returnNumber = req.body.returnNumber;
+  let returnMail = req.body.textBackEmail;
   let message = req.body.messageString;
 
-  storeData( sendNumbers, message, returnNumber)
+  storeData( sendNumbers, message, returnMail)
 
   let spawn = require("child_process").spawn;
-  let pythonScript = spawn('python3', ["main_module.py", sendNumbers, returnNumber, message]);
+  let pythonScript = spawn('python3', ["main_module.py", sendNumbers, message, returnMail]);
   pythonScript.stdout.on('data', function(data) {
   console.log(data.toString());});
   res.send("data has been added");
