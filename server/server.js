@@ -53,7 +53,7 @@ app.post('/enterData', (req, res) =>
   res.send("data has been added");
 });
 
-app.use(express.static(path.join(__dirname,'webpage')));
+app.use(express.static(path.join(__dirname,'web')));
 
 app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`)
